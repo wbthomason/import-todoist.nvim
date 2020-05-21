@@ -1,8 +1,8 @@
 import pynvim
 import todoist
 from dateutil.parser import parse
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+from datetime import datetime, time, timezone
+from dateutil.tz import tzlocal
 
 
 @pynvim.plugin
@@ -17,9 +17,13 @@ class TodoistImport:
   def import_completed_for_date(self, target_date):
     if type(target_date) is str:
       target_date = parse(target_date, default=datetime.max)
-    since = (target_date - relativedelta(days=+1))
-    until = (target_date + relativedelta(days=+1))
-    completions = self.api.completed.get_all(until=until.isoformat(), since=target_date.isoformat())
+    local_tz = tzlocal()
+    since = datetime.combine(target_date.date(), time.min, tzinfo=local_tz)
+    until = datetime.combine(target_date.date(), time.max, tzinfo=local_tz)
+    completions = self.api.completed.get_all(
+        until=until.astimezone(timezone.utc).isoformat(),
+        since=since.astimezone(timezone.utc).isoformat()
+    )
 
     items = completions['items']
     projects = completions['projects']
