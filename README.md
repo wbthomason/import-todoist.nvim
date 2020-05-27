@@ -1,7 +1,9 @@
-# todoist-import.nvim
+# import-todoist.nvim
 
 This is a very simple Neovim plugin to import completed tasks for a given date from Todoist into a
 buffer.
+
+This plugin is not created by, affiliated with, or supported by Doist.
 
 ## Installation
 
@@ -12,7 +14,7 @@ You will need Neovim, the Neovim Python 3 remote plugin host, and the [Todoist P
 Install these dependencies and use your favorite plugin manager to install this plugin. With
 [`vim-packager`](https://github.com/kristijanhusak/vim-packager), this looks like:
 ```vim
-call packager#add('wbthomason/todoist-import.nvim')
+call packager#add('wbthomason/import-todoist.nvim')
 ```
 
 ## Usage
